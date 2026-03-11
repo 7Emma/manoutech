@@ -192,7 +192,7 @@ export default function ServicesPage() {
               <em>complètes, prêtes à livrer.</em>
             </h1>
             <p className="sv-sub">
-              Nous prenons en charge le cycle complet — discovery, design
+              Nous prenons en charge le cycle complet discovery, design
               system, développement, QA, analytics, déploiement et suivi
               post-lancement.
             </p>

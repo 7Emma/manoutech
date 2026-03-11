@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, Fragment } from "react";
+import { TechIcon } from "./TechIcon";
 import "../styles/hero.css";
 
 const steps = [
@@ -14,7 +15,7 @@ const steps = [
     icon: "◉",
     label: "Design",
     desc: "Design system express + maquettes haute fidélité",
-    duration: "J4–8",
+    duration: "J4-8",
   },
   {
     icon: "⬡",
@@ -25,7 +26,7 @@ const steps = [
   {
     icon: "◎",
     label: "Launch",
-    desc: "Analytics, performance, SEO — prêt à convertir",
+    desc: "Analytics, performance, SEO prêt à convertir",
     duration: "J31–42",
   },
 ];
@@ -169,13 +170,16 @@ export default function Hero() {
               {[
                 "Next.js",
                 "React Native",
-                "Node",
+                "Android Studio",
                 "Postgres",
+                "VS Code",
+                "Django",
+                "Node",
                 "Vercel",
                 "AI/ML",
               ].map((t) => (
-                <span className="stack-tag" key={t}>
-                  {t}
+                <span className="stack-icon" key={t} title={t}>
+                  <TechIcon name={t} />
                 </span>
               ))}
             </div>

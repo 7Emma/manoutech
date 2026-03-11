@@ -8,6 +8,7 @@ const Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     excerpt: { type: "string", required: true },
     date: { type: "date", required: true },
+    category: { type: "string", required: false },
     tags: { type: "list", of: { type: "string" }, required: false },
   },
   computedFields: {

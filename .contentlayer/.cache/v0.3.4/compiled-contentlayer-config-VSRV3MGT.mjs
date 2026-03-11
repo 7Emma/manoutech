@@ -8,6 +8,7 @@ var Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     excerpt: { type: "string", required: true },
     date: { type: "date", required: true },
+    category: { type: "string", required: false },
     tags: { type: "list", of: { type: "string" }, required: false }
   },
   computedFields: {
@@ -38,4 +39,4 @@ var contentlayer_config_default = makeSource({
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-WOCII337.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-VSRV3MGT.mjs.map

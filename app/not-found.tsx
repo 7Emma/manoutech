@@ -6,6 +6,11 @@ import "@/styles/notFound.css";
 
 export default function NotFound() {
   const [countdown, setCountdown] = useState(10);
+  const [pathname, setPathname] = useState("/page-introuvable");
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
 
   useEffect(() => {
     if (countdown <= 0) {
@@ -24,42 +29,34 @@ export default function NotFound() {
         <div className="nf-grid" />
         <div className="nf-orb nf-orb-a" />
         <div className="nf-orb nf-orb-b" />
-        <div className="nf-orb nf-orb-c" />
-        <div className="nf-scan" />
 
         <div className="nf-inner">
-          {/* Big glitch number */}
-          <div className="nf-big" aria-hidden="true">
-            404
+          {/* ── HERO ── */}
+          <div className="nf-hero">
+            <div className="nf-eyebrow">
+              <span className="nf-dot" />
+              Erreur 404
+            </div>
+
+            <h1 className="nf-h1">
+              Page <em>introuvable.</em>
+            </h1>
+            
+            <p className="nf-intro">
+              Cette URL n'existe pas ou a été déplacée. Vérifiez le lien ou retournez à l'accueil pour continuer votre navigation.
+            </p>
+
+            {/* Path */}
+            <div className="nf-path">
+              <span>GET</span>
+              <span className="nf-path-err">
+                {pathname}
+              </span>
+              <span className="nf-path-arrow">→ 404</span>
+            </div>
           </div>
 
-          {/* Status chip */}
-          <div className="nf-code">
-            <span className="nf-code-dot" />
-            HTTP 404 · Not Found
-          </div>
-
-          {/* Title */}
-          <h1 className="nf-h1">
-            Page <em>introuvable.</em>
-          </h1>
-          <p className="nf-sub">
-            Cette URL n'existe pas ou a été déplacée. Vérifiez le lien ou
-            retournez à l'accueil.
-          </p>
-
-          {/* Path */}
-          <div className="nf-path">
-            <span>GET</span>
-            <span className="nf-path-err">
-              {typeof window !== "undefined"
-                ? window.location.pathname
-                : "/page-introuvable"}
-            </span>
-            <span className="nf-path-arrow">→ 404</span>
-          </div>
-
-          {/* CTAs */}
+          {/* ── CTAs ── */}
           <div className="nf-btns">
             <a href="/" className="nf-btn-primary">
               ← Retour à l'accueil
@@ -69,19 +66,21 @@ export default function NotFound() {
             </a>
           </div>
 
-          {/* Quick links */}
-          <div className="nf-links-label">Pages utiles</div>
-          <div className="nf-links">
-            {quickLinks.map((l) => (
-              <a key={l.href} href={l.href} className="nf-link">
-                {l.label}
-              </a>
-            ))}
+          {/* ── Quick links ── */}
+          <div className="nf-links-section">
+            <div className="nf-section-label">Pages utiles</div>
+            <div className="nf-links">
+              {quickLinks.map((l) => (
+                <a key={l.href} href={l.href} className="nf-link">
+                  {l.label}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Countdown */}
+          {/* ── Countdown ── */}
           <div className="nf-redirect">
-            <span>Redirection auto dans {countdown}s</span>
+            <span>Redirection automatique dans {countdown}s</span>
             <div className="nf-rdr-bar">
               <div className="nf-rdr-fill" style={{ width: `${pct}%` }} />
             </div>

@@ -35,7 +35,7 @@ function formatDate(date: string) {
 // BLOG CARD
 // ─────────────────────────────────────────
 function BlogCard({ post, featured = false }: { post: any; featured?: boolean }) {
-  const accent = categoryAccents[post.category] || "#4ec9b0";
+  const accent = categoryAccents[(post.category as string) || "Méthode"] || "#4ec9b0";
   const vars = {
     "--cat-c": accent,
     "--cat-dim": `${accent}33`,
@@ -99,7 +99,7 @@ function Newsletter() {
           Newsletter
         </div>
         <div className="bl-nl-h">Restez dans la boucle.</div>
-        <p className="bl-nl-sub">Méthode produit, retours terrain, nouveaux articles — 2× par mois.</p>
+        <p className="bl-nl-sub">Méthode produit, retours terrain, nouveaux articles 2× par mois.</p>
       </div>
       <div className="bl-nl-right">
         {sent ? (
@@ -160,7 +160,7 @@ export default function BlogList({ limit = 6, posts }: { limit?: number; posts?:
               <em>sans bullshit.</em>
             </h1>
             <p className="bl-sub">
-              Retours d'expérience sur la product, la data, le design et l'engineering — rédigés par l'équipe qui
+              Retours d'expérience sur la product, la data, le design et l'engineering rédigés par l'équipe qui
               livre.
             </p>
           </div>

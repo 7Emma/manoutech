@@ -471,21 +471,31 @@
   margin-top: 18px;
 }
 
-.stack-tag {
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
+.stack-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
   color: var(--brand-dark-gray);
-  background: rgba(var(--brand-dark-blue-rgb), 0.05);
-  border: 1px solid rgba(var(--brand-dark-blue-rgb), 0.1);
-  padding: 4px 10px;
-  border-radius: 6px;
-  transition: border-color 0.2s, color 0.2s;
+  background: rgba(var(--brand-dark-blue-rgb), 0.06);
+  border: 1px solid rgba(var(--brand-dark-blue-rgb), 0.12);
+  border-radius: 8px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+  cursor: pointer;
 }
 
-.stack-tag:hover {
+.stack-icon svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.stack-icon:hover {
   border-color: rgba(var(--brand-dark-blue-rgb), 0.3);
   color: var(--brand-dark-blue);
+  background: rgba(var(--brand-dark-blue-rgb), 0.1);
+  transform: translateY(-2px);
 }
 
 @keyframes fadeUp {
