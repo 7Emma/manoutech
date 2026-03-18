@@ -1,0 +1,193 @@
+.md-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .md-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.md-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Sender header */
+.md-sender {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #f0f1f3;
+  background: #f8fbff;
+}
+
+.md-sender-av {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #242675, #3E4347);
+  box-shadow: 0 0 0 1px rgba(36, 38, 117, 0.2);
+}
+
+.md-sender-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.md-sender-email {
+  font-size: 13px;
+  font-weight: 500;
+  color: #242675;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.md-sender-email:hover {
+  color: #3E4347;
+}
+
+.md-sender-company {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  color: #7A7F84;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.md-sender-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.md-sender-date {
+  font-size: 12px;
+  font-weight: 500;
+  color: #3E4347;
+}
+
+.md-sender-date-full {
+  font-size: 10.5px;
+  color: #7A7F84;
+  margin-top: 2px;
+}
+
+/* Message body */
+.md-msg-body {
+  padding: 28px 26px;
+}
+
+.md-msg-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7A7F84;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.md-msg-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #cbd5e1, transparent);
+}
+
+.md-msg-text {
+  background: #f8fbff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 22px;
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.85;
+  color: #0f172a;
+  white-space: pre-wrap;
+  font-family: 'Space Grotesk', sans-serif;
+  position: relative;
+}
+
+.md-msg-text::before {
+  content: '"';
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  font-size: 56px;
+  line-height: 1;
+  color: rgba(36, 38, 117, 0.08);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+/* Reply area */
+.md-reply {
+  padding: 0 26px 26px;
+}
+
+.md-reply-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7A7F84;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.md-reply-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #cbd5e1, transparent);
+}
+
+.md-reply-area {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  background: #f8fbff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #0f172a;
+  outline: none;
+  line-height: 1.7;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 12px;
+}
+
+.md-reply-area::placeholder {
+  color: #7A7F84;
+}
+
+.md-reply-area:focus {
+  border-color: #242675;
+  background: #ffffff;
+}

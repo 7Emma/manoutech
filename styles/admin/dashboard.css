@@ -1,0 +1,147 @@
+/* ── DASHBOARD PAGE ── */
+.al-dash-h {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+  margin: 0 0 28px;
+  line-height: 1.1;
+}
+
+.al-dash-h em {
+  font-style: normal;
+  color: transparent;
+  background: linear-gradient(90deg, #242675, #3E4347);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.al-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .al-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.al-kpi {
+  background: rgba(36, 38, 117, 0.04);
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.al-kpi:hover {
+  border-color: #a8d5ff;
+  background: rgba(36, 38, 117, 0.06);
+  transform: translateY(-2px);
+}
+
+.al-kpi-left {
+}
+
+.al-kpi-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #0f172a;
+  margin-bottom: 5px;
+}
+
+.al-kpi-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #7A7F84;
+}
+
+.al-kpi-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.al-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 500px) {
+  .al-quick-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.al-quick-card {
+  background: rgba(36, 38, 117, 0.03);
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  transition: background 0.2s, border-color 0.2s, transform 0.18s;
+  text-decoration: none;
+}
+
+.al-quick-card:hover {
+  background: rgba(36, 38, 117, 0.06);
+  border-color: #a8d5ff;
+  transform: translateY(-1px);
+}
+
+.al-quick-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.al-quick-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #242675;
+}
+
+.al-quick-sub {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #7A7F84;
+  margin-top: 2px;
+}
+
+.al-quick-arrow {
+  margin-left: auto;
+  font-size: 13px;
+  color: #3E4347;
+  transition: transform 0.18s, color 0.18s;
+}
+
+.al-quick-card:hover .al-quick-arrow {
+  transform: translateX(3px);
+  color: #242675;
+}

@@ -1,0 +1,135 @@
+.md-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.md-side-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.md-side-header {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #f0f4ff;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  letter-spacing: -0.02em;
+}
+
+.md-side-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Status rows */
+.md-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 12px;
+}
+
+.md-status-key {
+  color: rgba(120, 160, 215, 0.6);
+  font-weight: 500;
+}
+
+.md-status-val {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(150, 190, 240, 0.8);
+  font-weight: 500;
+}
+
+.md-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.md-sv-yes .md-status-dot {
+  background: #4ec9b0;
+}
+
+.md-sv-no .md-status-dot {
+  background: rgba(239, 68, 68, 0.6);
+}
+
+.md-sv-arch .md-status-dot {
+  background: rgba(251, 191, 36, 0.8);
+}
+
+/* Archive button */
+.md-archive-btn {
+  width: 100%;
+  padding: 9px 12px;
+  margin-top: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: rgba(140, 180, 235, 0.65);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.md-archive-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #e0eaff;
+}
+
+.md-archive-btn.active {
+  background: rgba(78, 201, 176, 0.1);
+  border-color: rgba(78, 201, 176, 0.25);
+  color: #4ec9b0;
+}
+
+/* Info rows */
+.md-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+}
+
+.md-info-row:last-child {
+  border-bottom: none;
+}
+
+.md-info-key {
+  color: rgba(110, 150, 200, 0.5);
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.md-info-val {
+  color: rgba(175, 210, 255, 0.8);
+  text-align: right;
+  flex: 1;
+  word-break: break-word;
+}
+
+.md-info-mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(120, 160, 215, 0.5);
+  letter-spacing: 0.04em;
+  text-align: right;
+  flex: 1;
+  word-break: break-all;
+}

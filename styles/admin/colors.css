@@ -1,0 +1,28 @@
+/* Admin Color Palette - Based on Client Design */
+
+:root {
+  /* Primary Colors */
+  --admin-primary: #242675;      /* Dark Blue */
+  --admin-accent: #3E4347;       /* Dark Gray */
+  --admin-neutral: #7A7F84;      /* Light Gray */
+  
+  /* Backgrounds */
+  --admin-bg-main: #ffffff;      /* White */
+  --admin-bg-secondary: #f8fbff; /* Light Blue */
+  --admin-bg-tertiary: #f3f4fa;  /* Lighter Blue */
+  
+  /* Text */
+  --admin-text-primary: #0f172a;    /* Very Dark */
+  --admin-text-secondary: #3E4347;  /* Gray */
+  --admin-text-light: #7A7F84;      /* Light Gray */
+  
+  /* Borders */
+  --admin-border: #e5e7eb;
+  --admin-border-light: #f0f1f3;
+  
+  /* Status Colors */
+  --admin-status-published: #10b981;  /* Green */
+  --admin-status-draft: #f59e0b;      /* Amber */
+  --admin-status-error: #ef4444;      /* Red */
+  --admin-status-info: #3b82f6;       /* Blue */
+}

@@ -1,0 +1,72 @@
+.md-title-block {
+  margin-bottom: 28px;
+}
+
+.md-subject {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(20px, 3.5vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #f0f4ff;
+  margin: 0 0 10px;
+  line-height: 1.1;
+}
+
+.md-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.md-meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: rgba(120, 160, 215, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 4px 11px;
+  border-radius: 99px;
+}
+
+.md-meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #4da6ff;
+}
+
+.md-unread-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  padding: 3px 10px;
+  border-radius: 99px;
+  animation: mdPulse 2s infinite;
+}
+
+.md-unread-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fbbf24;
+}
+
+@keyframes mdPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

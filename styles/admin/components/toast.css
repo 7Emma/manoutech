@@ -1,0 +1,29 @@
+.md-toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0d1625;
+  border: 1px solid rgba(78, 201, 176, 0.3);
+  border-radius: 14px;
+  padding: 13px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4ec9b0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: mdSlideUp 0.25s ease;
+}
+
+@keyframes mdSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

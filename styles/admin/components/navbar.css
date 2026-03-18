@@ -1,0 +1,81 @@
+.md-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.md-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(130, 170, 230, 0.55);
+  text-decoration: none;
+  transition: color 0.18s, gap 0.18s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.md-back:hover {
+  color: #e0eaff;
+  gap: 10px;
+}
+
+.md-breadcrumb {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(110, 150, 200, 0.45);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.md-breadcrumb-sep {
+  opacity: 0.3;
+}
+
+.md-breadcrumb-cur {
+  color: rgba(160, 200, 255, 0.7);
+}
+
+.md-nav-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.md-arrow-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 7px 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(140, 180, 235, 0.65);
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.md-arrow-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #e0eaff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.md-arrow-name {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

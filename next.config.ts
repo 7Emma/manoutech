@@ -3,7 +3,12 @@ import { withContentlayer } from "next-contentlayer";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com',
+      },
+    ],
   },
   turbopack: {
     root: __dirname,

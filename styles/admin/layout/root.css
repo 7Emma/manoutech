@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.al-root {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #ffffff;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  color: #0f172a;
+  position: relative;
+}
+
+.al-bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: linear-gradient(rgba(36, 38, 117, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 38, 117, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}

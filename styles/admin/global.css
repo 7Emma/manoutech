@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.md-root {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #ffffff;
+  min-height: 100vh;
+  color: #0f172a;
+  padding: 36px 32px 80px;
+  position: relative;
+}
+
+.md-bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: linear-gradient(rgba(36, 38, 117, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 38, 117, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.md-orb-a {
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  top: -110px;
+  right: -70px;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(36, 38, 117, 0.08) 0%, transparent 70%);
+}
+
+.md-orb-b {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  bottom: 0;
+  left: -50px;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(62, 67, 71, 0.06) 0%, transparent 70%);
+}
+
+.md-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1060px;
+  margin: 0 auto;
+}
