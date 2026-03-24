@@ -29,6 +29,9 @@
 
 .lg-left-img {
   object-fit: cover;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .lg-left-overlay {
@@ -40,6 +43,7 @@
     rgba(10, 60, 100, 0.35) 60%,
     rgba(78, 201, 176, 0.18) 100%
   );
+  z-index: 1;
 }
 
 .lg-left-content {
@@ -48,6 +52,7 @@
   left: 40px;
   right: 40px;
   color: white;
+  z-index: 2;
 }
 
 /* Badge */

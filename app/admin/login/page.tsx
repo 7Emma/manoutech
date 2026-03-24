@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons } from "@/lib/icons";
+import { adminService } from "@/lib/services/admin";
 
 import "@/styles/admin/login.css";
 
@@ -27,27 +28,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setAttempts((a) => a + 1);
-        setError(
-          data.error || "Mot de passe incorrect. Vérifiez vos identifiants.",
-        );
-        setLoading(false);
-        return;
-      }
-
+      await adminService.login(password);
       setSuccess(true);
       setTimeout(() => router.push("/admin"), 1500);
-    } catch {
-      setError("Erreur de connexion. Veuillez réessayer.");
+    } catch (err) {
+      setAttempts((a) => a + 1);
+      setError(
+        err instanceof Error
+          ? err.message || "Mot de passe incorrect. Vérifiez vos identifiants."
+          : "Mot de passe incorrect. Vérifiez vos identifiants.",
+      );
       setLoading(false);
     }
   };
@@ -62,6 +52,7 @@ export default function LoginPage() {
           fill
           className="lg-left-img"
           priority
+          unoptimized
         />
         <div className="lg-left-overlay" />
         <div className="lg-left-content">
@@ -170,11 +161,7 @@ export default function LoginPage() {
                 </div>
               )}
 
-              {error && (
-                <div className="lg-error">
-                  {error}
-                </div>
-              )}
+              {error && <div className="lg-error">{error}</div>}
 
               <button
                 type="submit"

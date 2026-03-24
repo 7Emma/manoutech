@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { navItems } from "./layout-mock-data";
 import { AdminSidebar, AdminHeader } from "./components";
+import { adminService } from "@/lib/services/admin";
 
 // Styles
 import "@/styles/admin/layout/root.css";
@@ -25,12 +26,8 @@ export default function AdminLayout({
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/admin/session");
-        if (!res.ok) {
-          router.push("/admin/login");
-        } else {
-          setIsAuth(true);
-        }
+        await adminService.session();
+        setIsAuth(true);
       } catch (err) {
         router.push("/admin/login");
       } finally {
@@ -57,7 +54,7 @@ export default function AdminLayout({
 
   const active = getActiveFromPath(pathname);
   const current = navItems.find((n) => n.id === active);
-  const totalBadge = navItems.reduce((a, n) => a + (n.badge || 0), 0);
+  const totalBadge = 0;
 
   // Don't show layout on login page
   if (pathname === "/admin/login") {

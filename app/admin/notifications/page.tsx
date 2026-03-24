@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Icons } from '@/lib/icons';
 import '@/styles/admin/notifications.css';
+import { notificationsService } from '@/lib/services/notifications';
 
 // ─────────────────────────────────────────
 // Brand colors (from globals.css)
@@ -32,63 +33,31 @@ function timeAgo(d: string) {
   return fmt(d);
 }
 
-// ─────────────────────────────────────────
-// Mock notifications data
-// ─────────────────────────────────────────
-const mockNotifications = [
-  {
-    id: '1',
-    title: 'Nouveau message reçu',
-    message: 'Vous avez reçu un nouveau message de contact.',
-    type: 'message',
-    read: false,
-    created_at: new Date(Date.now() - 5 * 60000).toISOString(),
-  },
-  {
-    id: '2',
-    title: 'Newsletter inscrite',
-    message: 'Un nouvel utilisateur sest inscrit à la newsletter.',
-    type: 'newsletter',
-    read: false,
-    created_at: new Date(Date.now() - 15 * 60000).toISOString(),
-  },
-  {
-    id: '3',
-    title: 'Mise à jour système',
-    message: 'Une nouvelle version est disponible.',
-    type: 'system',
-    read: true,
-    created_at: new Date(Date.now() - 2 * 3600000).toISOString(),
-  },
-  {
-    id: '4',
-    title: 'Certificat SSL renouvelé',
-    message: 'Votre certificat SSL a été renouvelé avec succès.',
-    type: 'security',
-    read: true,
-    created_at: new Date(Date.now() - 24 * 3600000).toISOString(),
-  },
-  {
-    id: '5',
-    title: 'Sauvegarde complète',
-    message: 'La sauvegarde quotidienne sest déroulée sans erreur.',
-    type: 'backup',
-    read: true,
-    created_at: new Date(Date.now() - 3 * 24 * 3600000).toISOString(),
-  },
-];
-
 const FILTERS = ['Tous', 'Non lus', 'Messages', 'Système'];
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState(mockNotifications);
+  const [notifications, setNotifications] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('Tous');
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [toDelete, setToDelete] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const PER_PAGE = 10;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await notificationsService.list(200, 0, 'all');
+        setNotifications(data);
+      } catch (err) {
+        setToast('Erreur de chargement des notifications');
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   // ─────────────────────────────────────────
   // Filtering logic
@@ -112,23 +81,27 @@ export default function NotificationsPage() {
   // ─────────────────────────────────────────
   // Actions
   // ─────────────────────────────────────────
-  const markRead = (id: string) => {
+  const markRead = async (id: string) => {
+    await notificationsService.mark(id, true).catch(() => {});
     setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
   };
 
-  const bulkRead = () => {
+  const bulkRead = async () => {
+    await Promise.all(Array.from(selected).map(id => notificationsService.mark(id, true).catch(() => {})));
     setNotifications(notifications.map(n => selected.has(n.id) ? { ...n, read: true } : n));
     setSelected(new Set());
     setToast('Marqué comme lu');
     setTimeout(() => setToast(null), 3000);
   };
 
-  const doDelete = () => {
+  const doDelete = async () => {
     if (toDelete === 'bulk') {
+      await Promise.all(Array.from(selected).map(id => notificationsService.remove(id).catch(() => {})));
       setNotifications(notifications.filter(n => !selected.has(n.id)));
       setSelected(new Set());
       setToast(`${selected.size} notifications supprimées`);
     } else {
+      await notificationsService.remove(toDelete as string).catch(() => {});
       setNotifications(notifications.filter(n => n.id !== toDelete));
       setToast('Notification supprimée');
     }

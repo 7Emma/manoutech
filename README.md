@@ -70,6 +70,36 @@ Le site sera accessible à **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
+## 🧩 Configuration (env)
+
+Créer `.env.local` à la racine :
+
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+RESEND_API_KEY=...
+ADMIN_EMAIL=manoutechcorporate@gmail.com
+NEXT_PUBLIC_ADMIN_PASSWORD=...
+NEXT_PUBLIC_URL=http://localhost:3000
+NODE_ENV=development
+```
+
+Après modification, relancer `yarn dev`.
+
+## 🔔 Notifications & Admin
+
+- Les formulaires Contact/Newsletter créent des notifications (table `notifications`) et envoient des emails via Resend.
+- Dashboard, badges sidebar/cloche et page `/admin/notifications` s’appuient sur Supabase.
+- Exécuter `db-setup.sql` puis `db-functions.sql` dans Supabase avant de tester.
+
+## 🧭 SEO
+
+- `robots.txt` et `sitemap.xml` générés automatiquement (basés sur `siteConfig.url`).
+- OG/Twitter par défaut sur `/logo.png`; chaque article peut définir `ogImage`.
+- JSON-LD Organization global, JSON-LD Article sur les pages blog.
+
+---
+
 ## 🚀 Développement
 
 ### Scripts Disponibles

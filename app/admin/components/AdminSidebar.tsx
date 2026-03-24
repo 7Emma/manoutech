@@ -1,9 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Icons } from "@/lib/icons";
 import { navItems } from "../layout-mock-data";
+import { adminService } from "@/lib/services/admin";
+import { notificationsService } from "@/lib/services/notifications";
 
 interface AdminSidebarProps {
   collapsed: boolean;
@@ -28,13 +31,42 @@ export default function AdminSidebar({
   totalBadge,
 }: AdminSidebarProps) {
   const router = useRouter();
+  const [badges, setBadges] = useState<Record<string, number | null>>({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await adminService.dashboard();
+        setBadges({
+          messages: res.data.unreadMessages,
+          newsletter: res.data.subscribers,
+          blog: res.data.blog?.drafts ?? null,
+        });
+      } catch {
+        try {
+          const [{ data: msgs }, { data: subs }, { data: blogs }, { data: notifs }] =
+            await Promise.all([
+              import("@/lib/services/messages").then(m => m.messagesService.list({ limit: 200 })),
+              import("@/lib/services/newsletter").then(n => n.newsletterService.list(200, 0)),
+              import("@/lib/services/blog").then(b => b.blogService.list(200, 0)),
+              notificationsService.list(200, 0, 'unread'),
+            ]);
+          setBadges({
+            messages: msgs.filter((m: any) => !m.read && !m.archived).length,
+            newsletter: subs.length,
+            blog: blogs.filter((b: any) => b.status === "draft").length,
+          });
+        } catch {
+          setBadges({});
+        }
+      }
+    })();
+  }, []);
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("/api/admin/logout", { method: "POST" });
-      if (res.ok) {
-        router.push("/admin/login");
-      }
+      await adminService.logout();
+      router.push("/admin/login");
     } catch (err) {
       console.error("Logout failed:", err);
     }
@@ -88,8 +120,12 @@ export default function AdminSidebar({
           >
             <div className="al-nav-icon">{item.icon}</div>
             <span className="al-nav-label">{item.label}</span>
-            {item.badge && <span className="al-nav-badge">{item.badge}</span>}
-            {item.badge && <span className="al-nav-badge-dot" />}
+            {badges[item.id] !== undefined && badges[item.id] !== null && (
+              <>
+                <span className="al-nav-badge">{badges[item.id]}</span>
+                <span className="al-nav-badge-dot" />
+              </>
+            )}
           </Link>
         ))}
       </nav>

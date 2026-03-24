@@ -32,6 +32,12 @@ export async function POST(request: NextRequest) {
     // Send email notification to admin
     try {
       await sendContactNotificationEmail(name, email, message, messageId)
+      // Create in-app notification
+      await supabase.from('notifications').insert({
+        title: 'Nouveau message reçu',
+        message: `${name} vous a écrit`,
+        type: 'message',
+      })
     } catch (emailError) {
       console.error('Email sending failed:', emailError)
       // Don't fail the request if email fails
@@ -50,7 +56,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Validation error',
-          details: error.errors,
+          details: error.flatten(),
         },
         { status: 400 }
       )

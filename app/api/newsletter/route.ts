@@ -24,9 +24,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Send welcome email
+    // Send welcome email + create notification
     try {
       await sendNewsletterWelcomeEmail(email)
+      await supabase.from('notifications').insert({
+        title: 'Nouvel abonné',
+        message: `${email} vient de s'inscrire`,
+        type: 'newsletter',
+      })
     } catch (emailError) {
       console.error('Welcome email failed:', emailError)
     }

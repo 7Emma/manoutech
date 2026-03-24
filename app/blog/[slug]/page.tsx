@@ -14,9 +14,27 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { slug } = await params;
   const post = allPosts.find((p) => p._raw.flattenedPath === `blog/${slug}`);
   if (!post) return {};
+  const url = `https://manoutech.com/blog/${slug}`;
+  const ogImage = post.ogImage || "/logo.png";
+
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url,
+      type: "article",
+      publishedTime: post.date,
+      authors: post.author ? [post.author] : undefined,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: ogImage ? [ogImage] : undefined,
+    },
   };
 }
 
@@ -28,6 +46,9 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
 
   const code = (post as any).body?.code || (post as any)._raw?.sourceCodeMdx;
   if (!code) return notFound();
+
+  const url = `https://manoutech.com/blog/${slug}`;
+  const ogImage = (post as any).ogImage || "/logo.png";
 
   const categoryAccents: Record<string, string> = {
     "Méthode": "#4da6ff",
@@ -75,12 +96,28 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
               ))}
             </div>
 
-            {/* MDX body */}
-            <Mdx code={code} />
+          {/* MDX body */}
+          <Mdx code={code} />
 
-            {/* CTA */}
-            <div className="bp-cta">
-              <div className="bp-cta-left">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: post.title,
+                description: post.excerpt,
+                datePublished: post.date,
+                author: post.author ? { "@type": "Person", name: post.author } : undefined,
+                mainEntityOfPage: url,
+                image: ogImage ? [ogImage] : undefined,
+              }),
+            }}
+          />
+
+          {/* CTA */}
+          <div className="bp-cta">
+            <div className="bp-cta-left">
                 <div className="bp-cta-h">Un projet en tête ?</div>
                 <p className="bp-cta-sub">On répond sous 24h avec une estimation concrète.</p>
               </div>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icons } from '@/lib/icons';
+import { blogService } from '@/lib/services/blog';
 
 const css = `
   .ab-form-root { font-family: 'Space Grotesk', sans-serif; background: #ffffff; min-height: 100vh; color: #0f172a; padding: 40px 32px 80px; }
@@ -57,17 +58,7 @@ export default function NewBlogPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/blog', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, slug, content, status }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Erreur');
-      }
-
+      await blogService.create({ title, slug, content, status: status as 'draft' | 'published' });
       router.push('/admin/blog');
     } catch (err) {
       setError((err as Error).message);

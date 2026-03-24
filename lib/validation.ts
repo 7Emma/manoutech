@@ -19,3 +19,15 @@ export const adminLoginSchema = z.object({
 })
 
 export type AdminLoginInput = z.infer<typeof adminLoginSchema>
+
+export const blogCreateSchema = z.object({
+  title: z.string().min(3, 'Le titre doit avoir au moins 3 caractères'),
+  slug: z.string().min(3, 'Le slug doit avoir au moins 3 caractères').optional(),
+  content: z.string().optional(),
+  status: z.enum(['draft', 'published']).default('draft'),
+})
+
+export const blogUpdateSchema = blogCreateSchema.partial()
+
+export type BlogCreateInput = z.infer<typeof blogCreateSchema>
+export type BlogUpdateInput = z.infer<typeof blogUpdateSchema>

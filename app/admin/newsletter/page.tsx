@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import "@/styles/admin/newsletter.css";
-import { newsletterAPI } from "@/lib/admin-api";
+import { newsletterService } from "@/lib/services/newsletter";
 import { Icons } from "@/lib/icons";
 
 function fmt(d: string | Date) {
@@ -44,7 +44,7 @@ export default function NewsletterPage() {
     try {
       setLoading(true);
       setError(null);
-      const result = await newsletterAPI.getSubscribers(PER_PAGE, (page - 1) * PER_PAGE);
+      const result = await newsletterService.list(PER_PAGE, (page - 1) * PER_PAGE);
       setSubs(result.data || []);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : "Erreur inconnue";
@@ -100,7 +100,7 @@ export default function NewsletterPage() {
   const bulkDelete = async () => {
     try {
       const idsToDelete = Array.from(selected) as string[];
-      await newsletterAPI.bulkDeleteSubscribers(idsToDelete);
+      await newsletterService.bulkRemove(idsToDelete);
       setSubs(ss => ss.filter(s => !selected.has(s.id)));
       showToast(`${selected.size} abonné(s) supprimé(s)`);
       setSelected(new Set());

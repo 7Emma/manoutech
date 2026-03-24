@@ -3,17 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icons } from '@/lib/icons';
-
-async function fetchArticle(slug: string) {
-  try {
-    const res = await fetch(`/api/blog?slug=${slug}`);
-    if (!res.ok) throw new Error('Not found');
-    const { data } = await res.json();
-    return data[0] || null;
-  } catch {
-    return null;
-  }
-}
+import { blogService } from '@/lib/services/blog';
 
 const css = `
   .ab-form-root { font-family: 'Space Grotesk', sans-serif; background: #ffffff; min-height: 100vh; color: #0f172a; padding: 40px 32px 80px; }
@@ -68,7 +58,8 @@ export default function EditBlogPage({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     (async () => {
-      const art = await fetchArticle(params.slug);
+      const { data } = await blogService.getBySlug(params.slug);
+      const art = data?.[0];
       if (art) {
         setArticle(art);
         setTitle(art.title);
@@ -86,17 +77,7 @@ export default function EditBlogPage({ params }: { params: { slug: string } }) {
     setSaving(true);
 
     try {
-      const res = await fetch(`/api/blog/${article.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, slug, content, status }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Erreur');
-      }
-
+      await blogService.update(article.id, { title, slug, content, status });
       router.push('/admin/blog');
     } catch (err) {
       setError((err as Error).message);
@@ -108,8 +89,7 @@ export default function EditBlogPage({ params }: { params: { slug: string } }) {
   const handleDelete = async () => {
     if (!confirm('Supprimer cet article ?')) return;
     try {
-      const res = await fetch(`/api/blog/${article.id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Erreur');
+      await blogService.remove(article.id);
       router.push('/admin/blog');
     } catch {
       setError('Erreur lors de la suppression');

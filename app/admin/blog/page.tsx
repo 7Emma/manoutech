@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import "@/styles/admin/blog.css";
-import { blogAPI } from "@/lib/admin-api";
+import { blogService } from "@/lib/services/blog";
 import { Icons } from "@/lib/icons";
 
 function fmt(d: string | Date) {
@@ -43,7 +43,7 @@ export default function AdminBlogPage() {
       setLoading(true);
       setError(null);
       const status = filter === "Tous" ? undefined : (filter === "Publié" ? "published" : "draft");
-      const result = await blogAPI.getArticles(PER_PAGE, (page - 1) * PER_PAGE, status);
+      const result = await blogService.list(PER_PAGE, (page - 1) * PER_PAGE, status);
       setPosts(result.data || []);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : "Erreur inconnue";
@@ -67,7 +67,7 @@ export default function AdminBlogPage() {
   const doDelete = async () => {
     if (!toDelete) return;
     try {
-      await blogAPI.deleteArticle(toDelete.id);
+      await blogService.remove(toDelete.id);
       setPosts(ps => ps.filter(p => p.id !== toDelete.id));
       showToast("Article supprimé");
       setToDelete(null);

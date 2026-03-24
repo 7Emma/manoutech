@@ -17,6 +17,24 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
+-- Create notifications table
+CREATE TABLE IF NOT EXISTS notifications (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  message TEXT NOT NULL,
+  type TEXT DEFAULT 'system',
+  read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- Create admin_users table
+CREATE TABLE IF NOT EXISTS admin_users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
 -- Create blog_drafts table
 CREATE TABLE IF NOT EXISTS blog_drafts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -43,18 +61,25 @@ CREATE INDEX IF NOT EXISTS idx_contact_messages_archived ON contact_messages(arc
 CREATE INDEX IF NOT EXISTS idx_contact_messages_created_at ON contact_messages(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_email ON newsletter_subscribers(email);
 CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_subscribed ON newsletter_subscribers(subscribed);
+CREATE INDEX IF NOT EXISTS idx_notifications_read ON notifications(read);
+CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON notifications(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_admin_users_email ON admin_users(email);
 CREATE INDEX IF NOT EXISTS idx_admin_sessions_token ON admin_sessions(token);
 CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires_at ON admin_sessions(expires_at);
 
 -- Set table permissions (RLS)
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE blog_drafts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_sessions ENABLE ROW LEVEL SECURITY;
 
 -- Drop existing policies if they exist
 DROP POLICY IF EXISTS "Allow service role" ON contact_messages;
 DROP POLICY IF EXISTS "Allow service role" ON newsletter_subscribers;
+DROP POLICY IF EXISTS "Allow service role" ON notifications;
+DROP POLICY IF EXISTS "Allow service role" ON admin_users;
 DROP POLICY IF EXISTS "Allow service role" ON blog_drafts;
 DROP POLICY IF EXISTS "Allow service role" ON admin_sessions;
 
@@ -67,6 +92,18 @@ WITH CHECK (true);
 
 CREATE POLICY "Allow service role"
 ON newsletter_subscribers
+FOR ALL
+USING (true)
+WITH CHECK (true);
+
+CREATE POLICY "Allow service role"
+ON notifications
+FOR ALL
+USING (true)
+WITH CHECK (true);
+
+CREATE POLICY "Allow service role"
+ON admin_users
 FOR ALL
 USING (true)
 WITH CHECK (true);

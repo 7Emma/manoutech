@@ -5,15 +5,14 @@ import { useState, useEffect } from 'react';
 import { Icons } from '@/lib/icons';
 import '@/styles/admin/messages.css';
 import { ContactMessage } from '@/types/database';
+import { messagesService } from '@/lib/services/messages';
 
 // ─────────────────────────────────────────
 // Fetch messages from Supabase
 // ─────────────────────────────────────────
 async function fetchMessages() {
   try {
-    const res = await fetch('/api/messages?limit=1000');
-    if (!res.ok) throw new Error('Failed to fetch');
-    const { data } = await res.json();
+    const { data } = await messagesService.list({ limit: 1000 });
     return data || [];
   } catch (err) {
     console.error('Error fetching messages:', err);
@@ -129,15 +128,18 @@ export default function MessagesPage() {
     showToast('Message marqué comme lu');
   };
   const archiveOne = (id: string) => {
+    messagesService.toggleArchived(id).catch(() => {});
     setMessages(ms => ms.map(m => m.id === id ? { ...m, archived: true } : m));
     showToast('Message archivé');
   };
   const doDelete = () => {
     const ids = toDelete === 'bulk' ? selected : new Set([toDelete?.id]);
-    setMessages(ms => ms.filter(m => !ids.has(m.id)));
-    setSelected(new Set());
-    setToDelete(null);
-    showToast(ids.size > 1 ? `${ids.size} messages supprimés` : 'Message supprimé');
+    Promise.all(Array.from(ids).map(id => messagesService.remove(id).catch(() => {}))).finally(() => {
+      setMessages(ms => ms.filter(m => !ids.has(m.id)));
+      setSelected(new Set());
+      setToDelete(null);
+      showToast(ids.size > 1 ? `${ids.size} messages supprimés` : 'Message supprimé');
+    });
   };
   const bulkRead = () => {
     setMessages(ms => ms.map(m => selected.has(m.id) ? { ...m, read: true } : m));

@@ -1,11 +1,81 @@
 "use client";
 
-import { STATS, sparks } from "../page-mock-data";
+import { useEffect, useState } from "react";
+import { adminService } from "@/lib/services/admin";
+import { messagesService } from "@/lib/services/messages";
+import { newsletterService } from "@/lib/services/newsletter";
+import { blogService } from "@/lib/services/blog";
+import { sparks } from "../page-mock-data";
 import Sparkline from "./Sparkline";
 
 const sparkMax = (arr: number[]) => Math.max(...arr);
 
 export default function DashboardContent() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState({
+    totalMessages: 0,
+    unreadMessages: 0,
+    subscribers: 0,
+    messagesThisMonth: 0,
+    blog: { published: 0, drafts: 0, total: 0 },
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await adminService.dashboard();
+        setStats(res.data);
+      } catch (err) {
+        // Fallback: compute from other endpoints if RPC not available
+        try {
+          const [{ data: msgs }] = await Promise.all([
+            messagesService.list({ limit: 1000 }),
+          ]);
+
+          const totalMessages = msgs.length;
+          const unreadMessages = msgs.filter((m) => !m.read && !m.archived).length;
+          const messagesThisMonth = msgs.filter((m) => {
+            const d = new Date(m.created_at);
+            const now = new Date();
+            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && !m.archived;
+          }).length;
+
+          const subsRes = await newsletterService.list(1000, 0);
+          const subscribers = subsRes.data.length;
+
+          const blogRes = await blogService.list(1000, 0);
+          const published = blogRes.data.filter((b) => b.status === "published").length;
+          const drafts = blogRes.data.filter((b) => b.status === "draft").length;
+
+          setStats({
+            totalMessages,
+            unreadMessages,
+            messagesThisMonth,
+            subscribers,
+            blog: { published, drafts, total: published + drafts },
+          });
+        } catch (fallbackErr) {
+          setError(
+            fallbackErr instanceof Error
+              ? fallbackErr.message
+              : "Erreur de chargement"
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  const STATS = {
+    totalMessages: stats.totalMessages,
+    unreadMessages: stats.unreadMessages,
+    subscribers: stats.subscribers,
+    drafts: stats.blog.drafts,
+    articles: stats.blog.total,
+  };
+
   const kpis = [
     {
       id: "messages",
@@ -39,17 +109,6 @@ export default function DashboardContent() {
       trend: "±0",
       href: "blog",
       spark: sparks.articles,
-    },
-    {
-      id: "views",
-      icon: "◈",
-      label: "Vues totales",
-      val: "6.8k",
-      sub: "ce mois · +18%",
-      accent: "#fb923c",
-      trend: "+18%",
-      href: "blog",
-      spark: sparks.views,
     },
   ];
 
@@ -89,6 +148,8 @@ export default function DashboardContent() {
       <h2 className="al-dash-h">
         Bonjour, <em>Admin</em> 👋
       </h2>
+      {loading && <div style={{ padding: 12, color: "#7A7F84" }}>Chargement des stats…</div>}
+      {error && <div style={{ padding: 12, color: "#dc2626" }}>Erreur: {error}</div>}
       <div className="al-kpi-grid">
         {kpis.map((k) => (
           <div

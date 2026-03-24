@@ -1,6 +1,7 @@
 # 📧 Setup Resend - Guide complet
 
 Resend est utilisé pour envoyer les emails:
+
 - Notification admin quand un message est reçu
 - Email de bienvenue newsletter
 - Réponses aux visiteurs
@@ -23,6 +24,7 @@ Resend est utilisé pour envoyer les emails:
 6. ⚠️ Sauvegarder quelque part! (Tu ne pourras pas la voir après)
 
 ### ⚠️ Sécurité
+
 - **NE JAMAIS** partager ta clé API
 - **NE JAMAIS** la commit dans git
 - La garder dans `.env.local` (pas versionnée)
@@ -51,10 +53,12 @@ ADMIN_EMAIL=your-email@example.com
 ```
 
 **Remplacer:**
+
 - `re_xxxxx` → ta clé API Resend
 - `your-email@example.com` → ton email (reçoit les notifications)
 
 Exemple:
+
 ```bash
 RESEND_API_KEY=re_8Nx4z3qPp7kLmNvWxYaB
 ADMIN_EMAIL=emmanuel@manoutech.com
@@ -66,33 +70,36 @@ Créer un test file:
 
 ```typescript
 // lib/test-resend.ts
-import { Resend } from 'resend'
+import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function testEmail() {
   try {
     const result = await resend.emails.send({
-      from: 'contact@manoutech.com',
+      // IMPORTANT: Utilise `onboarding@resend.dev` pour les tests si tu n'as pas encore vérifié ton domaine.
+      // Une fois ton domaine vérifié, tu pourras utiliser une adresse comme `contact@manoutech.com`.
+      from: "onboarding@resend.dev",
       to: process.env.ADMIN_EMAIL!,
-      subject: 'Test Email - Manoutech Admin',
+      subject: "Test Email - Manoutech Admin",
       html: `
         <h2>Test Email</h2>
         <p>Si tu reçois ce message, Resend fonctionne! 🎉</p>
         <p>L'admin system est prêt à recevoir des notifications.</p>
       `,
-    })
+    });
 
-    console.log('✅ Email sent!', result)
-    return true
+    console.log("✅ Email sent!", result);
+    return true;
   } catch (error) {
-    console.error('❌ Error sending email:', error)
-    return false
+    console.error("❌ Error sending email:", error);
+    return false;
   }
 }
 ```
 
 Puis en CLI:
+
 ```bash
 node -r ts-node/register lib/test-resend.ts
 ```
@@ -102,6 +109,7 @@ Tu devrais recevoir un email à `ADMIN_EMAIL`.
 ## Step 6: Types d'emails utilisés
 
 ### 1. Notification Contact Form
+
 Quand quelqu'un remplit le formulaire de contact:
 
 ```
@@ -113,6 +121,7 @@ Contenu: Email du visiteur + lien vers admin panel
 ```
 
 ### 2. Newsletter Welcome
+
 Quand quelqu'un s'abonne:
 
 ```
@@ -124,6 +133,7 @@ Contenu: Message de bienvenue
 ```
 
 ### 3. Admin Reply (Manuel)
+
 L'admin peut répondre directement par email.
 
 ## ✅ Checklist
@@ -138,17 +148,24 @@ L'admin peut répondre directement par email.
 ## 💡 Notes importantes
 
 ### Email FROM
-- `contact@manoutech.com` → Formulaire de contact
-- `hello@manoutech.com` → Newsletter
-- Peux aussi utiliser `onboarding@resend.dev` (par défaut)
+
+Par défaut, pour les tests et sans domaine vérifié, tu dois utiliser `onboarding@resend.dev`.
+
+Une fois ton domaine vérifié (ex: `manoutech.com`), tu pourras utiliser des adresses personnalisées :
+
+- `contact@manoutech.com` → Pour les notifications du formulaire de contact.
+- `hello@manoutech.com` → Pour la newsletter.
 
 ### Quotas
+
 - Plan gratuit: 100 emails/jour
 - Plan pro: Emails illimitées
 - Suffisant pour un portfolio!
 
 ### Alternatives à Resend
+
 Si tu veux changer:
+
 - SendGrid
 - Mailgun
 - AWS SES
@@ -165,24 +182,28 @@ Mais Resend c'est le plus simple pour Next.js.
 ## 🆘 Troubleshooting
 
 ### Erreur: "Invalid API Key"
+
 → Vérifier que la clé est complète et correcte dans `.env.local`
 
 ### Erreur: "from must be a valid email"
+
 → Utiliser un email de ton domaine ou `onboarding@resend.dev`
 
 ### Email non reçu
+
 → Vérifier le dossier spam/junk
 → Vérifier que `ADMIN_EMAIL` est correct
 
 ### Quota dépassé
+
 → Upgrade plan gratuit vers pro
 → Ou réduire la fréquence d'emails
 
 ---
 
 **Une fois configuré, on teste avec:**
+
 1. `yarn dev`
 2. Soumettre un message de contact
 3. Vérifier que tu reçois l'email
 4. Aller à `/admin/login`
-

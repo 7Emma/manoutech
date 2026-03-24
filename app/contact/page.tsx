@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { Lock, CheckCircle, Mail, AlertCircle, Globe, Zap, Target } from "lucide-react";
 import { budgets, services, perks, faqs } from "@/mockdata/contact";
+import { publicService } from "@/lib/services/public";
 import "@/styles/contact.css";
 
 function getPerkIcon(iconName: string) {
@@ -27,12 +28,12 @@ function ContactForm() {
     const payload = { ...Object.fromEntries(fd.entries()), budget, services: selected };
     setStatus("loading");
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      await publicService.sendContact({
+        name: String(payload.name || ""),
+        email: String(payload.email || ""),
+        message: String(payload.message || ""),
       });
-      setStatus(res.ok ? "sent" : "error");
+      setStatus("sent");
     } catch {
       setStatus("error");
     }
