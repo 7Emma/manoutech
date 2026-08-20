@@ -1,16 +1,18 @@
 import { Resend } from 'resend'
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL
+function requireEnv(name: string) {
+  const value = process.env[name]
+
+  if (!value) {
+    throw new Error(`Missing ${name}`)
+  }
+
+  return value
+}
+
+const RESEND_API_KEY = requireEnv('RESEND_API_KEY')
+const ADMIN_EMAIL = requireEnv('ADMIN_EMAIL')
 const APP_URL = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
-
-if (!RESEND_API_KEY) {
-  throw new Error('Missing RESEND_API_KEY')
-}
-
-if (!ADMIN_EMAIL) {
-  throw new Error('Missing ADMIN_EMAIL')
-}
 
 const resend = new Resend(RESEND_API_KEY)
 

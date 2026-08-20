@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "about": "À Propos",
+    "projects": "Études de Cas",
+    "services": "Solutions",
+    "insights": "Publications",
+    "pricing": "Tarifs",
+    "start": "Démarrer un Projet"
+  },
+  "Home": {
+    "badge": "V2.0 EN LIGNE • PRÊT POUR L'IA",
+    "title1": "Nous concevons l'avenir des",
+    "title2": "écosystèmes numériques.",
+    "subtitle": "Nous construisons des solutions logicielles critiques et évolutives. De la conception architecturale au déploiement, ManouTech offre l'excellence technique aux équipes les plus ambitieuses du monde.",
+    "cta1": "Lancer Votre Projet",
+    "cta2": "Notre Méthodologie"
+  }
+}

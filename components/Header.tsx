@@ -1,104 +1,76 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import logo from "../public/wordmark.png";
-import "../styles/header.css";
-const links = [
-  { href: "/about", label: "À propos" },
-  { href: "/equipe", label: "Équipe" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Projets" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-];
-
-function LogoMark() {
-  return (
-    <div style={{
-      width: 38, height: 38, borderRadius: 10, flexShrink: 0,
-      background: "var(--brand-dark-blue)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      boxShadow: "0 2px 12px rgba(var(--brand-dark-blue-rgb), 0.45)",
-    }}>
-      <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
-        <circle cx="11" cy="11" r="4" fill="white" opacity="0.95"/>
-        <path d="M11 2L11 6M11 16L11 20M2 11L6 11M16 11L20 11" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M4.9 4.9L7.8 7.8M14.2 14.2L17.1 17.1M17.1 4.9L14.2 7.8M7.8 14.2L4.9 17.1"
-          stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
-      </svg>
-    </div>
-  );
-}
+import React from "react";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const t = useTranslations("Header");
 
   return (
-    <>
-
-
-      <header className={`mnt-header ${scrolled ? "scrolled" : "top"}`}>
-        <div className="mnt-inner">
-
-          {/* Logo */}
-          <Link href="/" className="mnt-logo">
-            <Image src={logo} alt="Manoutech" className="h-9 w-auto" priority />
+    <nav className="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-sm">
+      <div className="flex justify-between items-center max-w-container-max mx-auto px-gutter py-4">
+        <div className="flex items-center gap-2">
+          <Link href="/">
+            <span className="font-display-lg text-[24px] tracking-tighter text-on-surface font-extrabold cursor-pointer">
+              ManouTech
+            </span>
           </Link>
-
-          {/* Nav desktop */}
-          <nav className="mnt-nav">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={active === link.href ? "active" : ""}
-                onClick={() => setActive(link.href)}
-              >
-                {link.label}
-                {link.label === "Services" && <span className="mnt-badge">new</span>}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA + Burger */}
-          <div className="mnt-cta">
-            <Link href="/contact" className="mnt-btn-primary">
-              Parler à un expert →
-            </Link>
-            <button
-              className={`mnt-burger ${mobileOpen ? "open" : ""}`}
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Menu"
+        </div>
+        <div className="hidden md:flex items-center gap-8">
+          <Link
+            href="/services"
+            className="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-300"
+          >
+            {t("services")}
+          </Link>
+          <Link
+            href="/about"
+            className="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-300"
+          >
+            {t("about")}
+          </Link>
+          <Link
+            href="/projects"
+            className="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-300"
+          >
+            {t("projects")}
+          </Link>
+          <Link
+            href="/insights"
+            className="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-300"
+          >
+            {t("insights")}
+          </Link>
+          <Link
+            href="/pricing"
+            className="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-300"
+          >
+            {t("pricing")}
+          </Link>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 bg-surface-container-low rounded-full p-1 border border-white/5">
+            <Link 
+              href="/" 
+              locale="en" 
+              className="px-3 py-1 rounded-full text-xs font-semibold uppercase hover:bg-surface-container-high transition-colors"
             >
-              <span/><span/><span/>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        <div className={`mnt-mobile-menu ${mobileOpen ? "open" : ""}`}>
-          {links.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}>
-              {link.label}
-              <span className="arrow">→</span>
+              EN
             </Link>
-          ))}
-          <div className="mnt-mobile-divider"/>
-          <Link href="/contact" className="mnt-mobile-cta" onClick={() => setMobileOpen(false)}>
-            Parler à un expert →
-          </Link>
+            <Link 
+              href="/" 
+              locale="fr" 
+              className="px-3 py-1 rounded-full text-xs font-semibold uppercase hover:bg-surface-container-high transition-colors"
+            >
+              FR
+            </Link>
+          </div>
+          <button className="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-full font-semibold hover:scale-105 transition-transform duration-200 shadow-[0_0_15px_rgba(128,131,255,0.2)]">
+            {t("start")}
+          </button>
         </div>
-      </header>
-    </>
+      </div>
+    </nav>
   );
 }

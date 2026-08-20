@@ -1,38 +1,238 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --brand-dark-blue: #242675;
-  --brand-dark-blue-rgb: 36, 38, 117;
-  --brand-dark-gray: #3E4347;
-  --brand-dark-gray-rgb: 62, 67, 71;
-  --brand-light-gray: #7A7F84;
-  --primary: #242675;
-  --accent: #3E4347;
-  --neutral: #7A7F84;
+  --background: #0b1326;
+  --foreground: #dae2fd;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-accent: var(--accent);
-  --color-neutral: var(--neutral);
-  --color-slate-50: #f8fbff;
-  --color-slate-200: #e5e7eb;
-  --color-slate-300: #cbd5e1;
-  --color-slate-900: #0f172a;
-  --color-slate-950: #020617;
-  --font-sans: var(--font-sans);
+@theme {
+  --color-on-error-container: #ffdad6;
+  --color-surface-container-high: #222a3d;
+  --color-inverse-surface: #dae2fd;
+  --color-inverse-primary: #494bd6;
+  --color-surface-variant: #2d3449;
+  --color-on-tertiary-container: #081486;
+  --color-on-primary-fixed-variant: #2f2ebe;
+  --color-tertiary-fixed: #e0e0ff;
+  --color-surface-bright: #31394d;
+  --color-on-primary: #1000a9;
+  --color-on-surface: #dae2fd;
+  --color-outline-variant: #464554;
+  --color-secondary-container: #00a2e6;
+  --color-inverse-on-surface: #283044;
+  --color-surface-container-low: #131b2e;
+  --color-tertiary: #bdc2ff;
+  --color-on-primary-fixed: #07006c;
+  --color-primary: #c0c1ff;
+  --color-on-surface-variant: #c7c4d7;
+  --color-secondary-fixed-dim: #89ceff;
+  --color-secondary-fixed: #c9e6ff;
+  --color-secondary: #89ceff;
+  --color-on-error: #690005;
+  --color-on-primary-container: #0d0096;
+  --color-on-secondary-fixed: #001e2f;
+  --color-on-background: #dae2fd;
+  --color-surface-dim: #0b1326;
+  --color-on-tertiary-fixed: #000767;
+  --color-error: #ffb4ab;
+  --color-surface-container-highest: #2d3449;
+  --color-background: #0b1326;
+  --color-on-tertiary-fixed-variant: #2f3aa3;
+  --color-on-tertiary: #131e8c;
+  --color-primary-fixed: #e1e0ff;
+  --color-primary-fixed-dim: #c0c1ff;
+  --color-primary-container: #8083ff;
+  --color-surface-tint: #c0c1ff;
+  --color-on-secondary-container: #00344e;
+  --color-surface: #0b1326;
+  --color-on-secondary: #00344d;
+  --color-tertiary-fixed-dim: #bdc2ff;
+  --color-surface-container-lowest: #060e20;
+  --color-error-container: #93000a;
+  --color-on-secondary-fixed-variant: #004c6e;
+  --color-tertiary-container: #7c87f3;
+  --color-outline: #908fa0;
+  --color-surface-container: #171f33;
+
+  --spacing-section-padding-desktop: 120px;
+  --spacing-container-max: 1280px;
+  --spacing-base: 8px;
+  --spacing-section-padding-mobile: 64px;
+  --spacing-gutter: 24px;
+
+  --font-body-lg: var(--font-sans), "Inter", sans-serif;
+  --font-label-mono: var(--font-mono), "JetBrains Mono", monospace;
+  --font-body-md: var(--font-sans), "Inter", sans-serif;
+  --font-display-lg-mobile: var(--font-heading), "Geist", sans-serif;
+  --font-display-lg: var(--font-heading), "Geist", sans-serif;
+  --font-headline-md: var(--font-heading), "Geist", sans-serif;
+
+  /* Font sizes mapping from config */
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-label-mono: 14px;
+  --text-label-mono--line-height: 20px;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-display-lg-mobile: 40px;
+  --text-display-lg-mobile--line-height: 48px;
+  --text-display-lg: 64px;
+  --text-display-lg--line-height: 72px;
+  --text-headline-md: 32px;
+  --text-headline-md--line-height: 40px;
 }
 
 body {
-  background: #ffffff;
-  color: var(--foreground);
-  font-family: var(--font-sans), "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: inherit;
+.glass-card {
+  background: rgba(19, 27, 46, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-card:hover {
+  background: rgba(19, 27, 46, 0.6);
+  border-color: rgba(192, 193, 255, 0.15);
+  box-shadow: 0 10px 40px -10px rgba(192, 193, 255, 0.1), inset 0 0 0 1px rgba(192, 193, 255, 0.05);
+}
+
+.glass-card.project-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(192, 193, 255, 0.3);
+  box-shadow: 0 20px 40px -20px rgba(13, 0, 150, 0.5), inset 0 0 0 1px rgba(192, 193, 255, 0.1);
+}
+
+.active-filter {
+  background: linear-gradient(135deg, #8083ff, #00a2e6);
+  color: white;
+}
+
+.project-image-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(11, 19, 38, 0.9));
+  opacity: 0.8;
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  background-color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(192, 193, 255, 0.3);
+}
+
+.ambient-glow {
+  background: radial-gradient(circle at center, rgba(128, 131, 255, 0.1) 0%, transparent 70%);
+}
+
+.hero-mesh {
+  background-image: 
+      radial-gradient(at 0% 0%, rgba(192, 193, 255, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(0, 162, 230, 0.05) 0px, transparent 50%);
+}
+
+.glow-effect {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(128, 131, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nav-island {
+  background: rgba(11, 19, 38, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glow-indigo-bg {
+  background: radial-gradient(circle at center, rgba(128, 131, 255, 0.15) 0%, transparent 70%);
+}
+
+.glow-indigo-shadow {
+  box-shadow: 0 0 40px -10px rgba(128, 131, 255, 0.15);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0b1326; }
+::-webkit-scrollbar-thumb { background: #2d3449; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #464554; }
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.glow-effect {
+  position: absolute;
+  background: radial-gradient(circle, rgba(128, 131, 255, 0.15) 0%, rgba(128, 131, 255, 0) 70%);
+  pointer-events: none;
+}
+
+/* Premium Startup Typography Tweaks */
+h1, .font-display-lg, .font-display-lg-mobile {
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+h2, h3, .font-headline-md {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.ambient-glow {
+  background: radial-gradient(circle, rgba(192, 193, 255, 0.1) 0%, rgba(13, 0, 150, 0) 70%);
+  filter: blur(80px);
+  pointer-events: none;
 }

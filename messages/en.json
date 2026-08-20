@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "about": "About Us",
+    "projects": "Case Studies",
+    "services": "Solutions",
+    "insights": "Insights",
+    "pricing": "Pricing",
+    "start": "Start Project"
+  },
+  "Home": {
+    "badge": "V2.0 NOW LIVE • AI INTEGRATION READY",
+    "title1": "Engineering the future of",
+    "title2": "digital ecosystems.",
+    "subtitle": "We build mission-critical software solutions that scale. From architectural design to deployment, ManouTech delivers technical excellence for the world's most ambitious teams.",
+    "cta1": "Launch Your Project",
+    "cta2": "View Methodology"
+  }
+}

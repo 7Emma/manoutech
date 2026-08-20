@@ -213,9 +213,9 @@ export default function Loader() {
     ];
 
     let current = 0;
-    let timeouts = [];
+    let timeouts: ReturnType<typeof setTimeout>[] = [];
 
-    const runSegment = (segIdx) => {
+    const runSegment = (segIdx: number) => {
       if (segIdx >= speeds.length) return;
       const { target, delay } = speeds[segIdx];
       const tick = () => {
